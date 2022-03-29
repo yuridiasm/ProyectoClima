@@ -19,4 +19,7 @@ Route::get('/', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/clima', [App\Http\Controllers\HomeController::class, 'consumirApi']);
+Route::get('/clima/{pais}', [App\Http\Controllers\HomeController::class, 'consumirApi']);
+Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');
+Route::get('/usuarios', [App\Http\Controllers\HomeController::class, 'usuarios'])->name('usuarios');
+

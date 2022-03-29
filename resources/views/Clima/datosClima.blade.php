@@ -7,19 +7,12 @@
         </div>
       </div>
       <div class="card-body">
-        @foreach ($datos->location as $item)
-           
-            <label>  {{$item}}
-            </label>
-                        
-        @endforeach
+      
         
-       <label> </label>
+       <label> {{$clima['datos']->location->country}}</label>
       </div>
       <div class="card-footer">
-        <div class="stats">
-          <i class="material-icons">access_time</i> campaign sent 2 days ago
-        </div>
+       
       </div>
     </div>
   </div>
@@ -31,8 +24,9 @@
         </div>
       </div>
       <div class="card-body">
-        
-        <p class="card-category"></p>
+        <img src="{{$clima['datos']->current->condition->icon}}">
+        <p class="card-category">{{$clima['datos']->current->temp_c}} °C</p>
+        <p class="card-category">{{$clima['datos']->current->condition->text}}</p>
       </div>
       <div class="card-footer">
         <div class="stats">
@@ -55,6 +49,7 @@
           <div class="tab-pane active" id="profile">
             <table class="table">
               <tbody>
+                @foreach($tareasPend as $tarea)
                 <tr>
                   <td>
                     <div class="form-check">
@@ -66,7 +61,7 @@
                       </label>
                     </div>
                   </td>
-                  <td>Crear Api</td>
+                  <td>{{$tarea->Descripcion}}</td>
                   <td class="td-actions text-right">
                     <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
                       <i class="material-icons">edit</i>
@@ -75,7 +70,8 @@
                       <i class="material-icons">close</i>
                     </button>
                   </td>
-                </tr>                     
+                </tr> 
+                @endforeach                    
               </tbody>
             </table>
           </div>              
@@ -94,15 +90,32 @@
       </div>
       <div class="card-body">
         <h4 class="card-title"></h4>
-        <p class="card-category">
+        <p class="card-category"> {{$clima['datos']->location->localtime}} 
       </div>
     </div>          
   </div>
   <div class="col-md-4">
     <div class="card card-chart">
+      <div class="card-header card-header-danger">
+        <div class="ct-chart" id="clima">
+          <span class="nav-tabs-title">Zona Horaria</span> 
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-category">{{$clima['datos']->location->tz_id}}</p>        
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons"></i> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-chart">
       <div class="card-header card-header-success">
         <div class="ct-chart" id="Paises">
-          <span class="nav-tabs-title">TAREAS TERMINADAS</span> 
+          <span class="nav-tabs-title">TAREAS COMPLETADAS</span> 
         </div>
       </div>
       <div class="card-body">
@@ -110,7 +123,14 @@
       </div>
       <div class="card-footer">
         <div class="stats">
-          HACER LOGIN
+          <ul>
+            @foreach ($tareasComp as $tarea)
+            <li> 
+              {{$tarea->Descripcion}}
+            </li>
+                
+            @endforeach
+          </ul>
         </div>
       </div>
     </div>

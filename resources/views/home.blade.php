@@ -17,11 +17,14 @@
             </div>
             <div class="card-footer">
               <div class="stats">
-                @foreach ($paises as $pais)
-                 <li>
-                   <a class="pais" href="#">  {{$pais->nombre}} </a>
-                 </li>
-                @endforeach
+              @if(isset($paises))                
+                <select  data-size="5" id="pais" name="pais" class="form-control" data-live-search="true">
+                  <option value="0">Seleccione un Pais</option>
+                  @foreach($paises as $pais)
+                    <option value="{{$pais->nombre}}">{{$pais->nombre}}</option>
+                  @endforeach
+                </select>
+              @endif
               </div>
             </div>
           </div>
@@ -36,9 +39,15 @@
 
 @push('js')
   <script>
-   $(".pais").click(function(){
+  $("#pais").change(function(){
     console.log("Entrando");
-    var url ='/clima';
+
+    const removeAccents = (str) => {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    } 
+   
+    var pais = removeAccents($("#pais").val());
+    var url ='/clima/'+pais;
     $.get(url, function(data){
                 $('#climaDatos').empty().append(data);
             });

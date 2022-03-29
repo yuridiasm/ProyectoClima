@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+//Modelos
 use App\Models\Pais;
-use Illuminate\Support\Facades\Http;
+use App\Models\TareasCompletadas;
+use App\Models\TareasPendientes;
+use App\Models\User;
 use GuzzleHttp\Client;
 
 class HomeController extends Controller
@@ -32,20 +34,18 @@ class HomeController extends Controller
         return view('home',compact('paises'));
     }
 
-    public function  consumirApi()
+    public function  consumirApi(String $Pais)
     {
-        // $datosClima = HTTP::get(' http://api.weatherapi.com/v1/current.json',[
-            
-        //     'q' => 'Mexico',
-        //     'aqi'=>'no'
-        // ]);
+        $tareasPendientes = TareasPendientes::all();
+        $tareasCompletadas = TareasCompletadas::all();
         
         $client = new Client();
-        $url = "http://api.weatherapi.com/v1/current.json?q=Mexico";
-
+        $url = "http://api.weatherapi.com/v1/current.json";
+       
 
         $params = [
-            'q' => 'Mexico'
+            'q' => $Pais,
+            'lang' => 'es'
         ];
 
         $headers = [
@@ -55,11 +55,25 @@ class HomeController extends Controller
         $response = $client->request('GET', $url, [            
            
             'headers' => $headers,
-            'json' => $params
+            'query' => $params
         ]);        
 
-        $responsePaises = ['datos'=>json_decode($response->getBody())];       
+        $responsePaises = ['datos'=>json_decode($response->getBody())];   
+        $view=[
+            "tareasComp" => $tareasCompletadas,
+            "tareasPend" => $tareasPendientes,
+            "clima" => $responsePaises
+        ];    
         
-       return view('Clima.datosClima',$responsePaises);
+       return view('Clima.datosClima',$view);
+    }
+
+    public function user(){
+        return view('userAdmin.userProfile');
+    }
+
+    public function usuarios(){
+        $usuarios = User::all();        
+        return view('userAdmin.usuariosLista',compact('usuarios'));
     }
 }

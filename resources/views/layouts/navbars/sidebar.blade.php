@@ -22,15 +22,13 @@
         <div class="collapse show" id="laravelExample">
           <ul class="nav">
             <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-              <a class="nav-link" href="#">
-                <span class="sidebar-mini"> UP </span>
-                <span class="sidebar-normal">{{ __('User profile') }} </span>
+              <a class="nav-link" href="{{route('user')}}">               
+                <span class="sidebar-normal">{{ __('Perfil de usuario') }} </span>
               </a>
             </li>
             <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-              <a class="nav-link" href="#">
-                <span class="sidebar-mini"> UM </span>
-                <span class="sidebar-normal"> {{ __('User Management') }} </span>
+              <a class="nav-link" href="{{route('usuarios')}}">
+               <span class="sidebar-normal"> {{ __('Usuarios') }} </span>
               </a>
             </li>
           </ul>
